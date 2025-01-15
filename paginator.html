@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paginator with Active Transition</title>
+    <link rel="stylesheet" href="paginator.css">
+</head>
+<body>
+    <div class="pagination">
+        <!-- Previous Arrow -->
+        <a href="#" class="arrow" id="prev">&laquo;</a>
+        <!-- Page Numbers -->
+        <a href="#" class="page active" data-page="1">1</a>
+        <a href="#" class="page" data-page="2">2</a>
+        <a href="#" class="page" data-page="3">3</a>
+        <a href="#" class="page" data-page="4">4</a>
+        <a href="#" class="page" data-page="5">5</a>
+        <!-- Next Arrow -->
+        <a href="#" class="arrow" id="next">&raquo;</a>
+    </div>
+
+    <script>
+        // Select elements
+        const pages = document.querySelectorAll('.pagination .page');
+        const prevArrow = document.getElementById('prev');
+        const nextArrow = document.getElementById('next');
+        let currentPage = 1; // Active page starts at 1
+
+        // Function to update the active page
+        function updateActivePage() {
+            // Remove 'active' class from all pages
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Add 'active' class to the current page
+            document.querySelector(`.pagination .page[data-page="${currentPage}"]`).classList.add('active');
+        }
+
+        // Handle clicks on page numbers
+        pages.forEach(page => {
+            page.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent default link behavior
+                currentPage = parseInt(page.getAttribute('data-page')); // Update current page
+                updateActivePage(); // Update UI
+            });
+        });
+
+        // Handle previous arrow click
+        prevArrow.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentPage > 1) {
+                currentPage--; // Move to previous page
+                updateActivePage();
+            }
+        });
+
+        // Handle next arrow click
+        nextArrow.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentPage < pages.length) {
+                currentPage++; // Move to next page
+                updateActivePage();
+            }
+        });
+    </script>
+</body>
+</html>
